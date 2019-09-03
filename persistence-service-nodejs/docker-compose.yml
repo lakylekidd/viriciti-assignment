@@ -1,0 +1,25 @@
+version: '3'
+services:
+  api:
+    image: express-api
+    build: .
+    networks: 
+      - backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/app 
+      # Add volume mapping to dynamically change contents of running 
+      # container using nodemon.
+      # If we change a file in the local machine, it must be reflected
+      # on the docker container as well. This is where mapping comes to play.
+
+  web-cli:
+    image: express-api
+    networks:
+      - backend
+    command: sh
+
+networks:
+  backend:
+    driver: bridge
