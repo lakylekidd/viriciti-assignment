@@ -20,6 +20,10 @@ const logger = log({
     label: config.name
 });
 
+// Import the Vehicle Stream module
+const vehicleStream = require('./vehicle-stream')(logger);
+vehicleStream.connect();
+
 // Setup server
 app.use(bodyParser.json());
 app.use(cors());
