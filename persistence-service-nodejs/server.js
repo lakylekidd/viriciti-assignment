@@ -23,7 +23,6 @@ const logger = log({
 
 // Import the Vehicle Stream module
 const vehicleStream = require('./vehicle-stream')(logger);
-// vehicleStream.connect();
 
 // Setup server
 app.use(bodyParser.json());
@@ -36,8 +35,17 @@ app.get('/', (req, res) => {
     res.status(200).send('Api is running!!!');
 });
 
+// Variable that erases the db on init
+const eraseDatabaseOnSync = true;
+
 // Connect to MongoDB
 connectDb().then(async () => {
+    // Check if db clean on init is enabled
+    if (eraseDatabaseOnSync) {
+        await Promise.all(models.vehicleData.deleteMany());
+    }
+    // Connect to vehicle stream
+    vehicleStream.connect();
     // Set up port
     app.listen(config.port, config.host, (e) => {
         if (e) {
