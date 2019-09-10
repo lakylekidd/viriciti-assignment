@@ -9,7 +9,7 @@ const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 // The server configuration
 const config = {
     name: 'dockerized-express-api',
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 4000,
     host: '0.0.0.0'
 };
 
