@@ -42,10 +42,10 @@ const eraseDatabaseOnSync = true;
 connectDb().then(async () => {
     // Check if db clean on init is enabled
     if (eraseDatabaseOnSync) {
-        await Promise.all(models.vehicleData.deleteMany());
+        await models.vehicleData.deleteMany();
     }
     // Connect to vehicle stream
-    vehicleStream.connect();
+    vehicleStream.connect(models.vehicleData);
     // Set up port
     app.listen(config.port, config.host, (e) => {
         if (e) {
