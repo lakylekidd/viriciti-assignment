@@ -2,7 +2,7 @@
 const NATS = require('nats');
 
 module.exports = (logger) => {
-	connect: () => {
+	const connect = () => {
 		// ** NATS CONFIG ** //
 		const reconnecting = false;
 
@@ -27,6 +27,8 @@ module.exports = (logger) => {
          * Adds the received data to the database
          * @param {Object} data The received data
          */
-		const addToDatabase = (data) => {};
+		const addToDatabase = (data) => { };
 	};
+
+	return { connect };
 };

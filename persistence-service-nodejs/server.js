@@ -1,5 +1,6 @@
 // Use local env secret variables
 require('dotenv').config();
+const { models, connectDb } = require('./mongo-connect');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -22,7 +23,7 @@ const logger = log({
 
 // Import the Vehicle Stream module
 const vehicleStream = require('./vehicle-stream')(logger);
-vehicleStream.connect();
+// vehicleStream.connect();
 
 // Setup server
 app.use(bodyParser.json());
@@ -33,13 +34,17 @@ app.use(ExpressAPILogMiddleware(logger, { request: true }));
 app.get('/', (req, res) => {
     // Return 200
     res.status(200).send('Api is running!!!');
+});
+
+// Connect to MongoDB
+connectDb().then(async () => {
+    // Set up port
+    app.listen(config.port, config.host, (e) => {
+        if (e) {
+            throw new Error('Internal Server Error');
+        }
+        // Log server is running
+        logger.info(`${config.name} running on ${config.host}:${config.port}`);
+    })
 })
 
-// Set up port
-app.listen(config.port, config.host, (e) => {
-    if (e) {
-        throw new Error('Internal Server Error');
-    }
-    // Log server is running
-    logger.info(`${config.name} running on ${config.host}:${config.port}`);
-})
