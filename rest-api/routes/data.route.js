@@ -1,15 +1,15 @@
 // Import required modules
 const { Router } = require('express');
-// const { onStream, onMessage } = require('../controllers/messages.controller');
+const { getById, getByVehicleName } = require('../controllers/data.controller');
 
 // Create the new router
 const router = new Router();
 
-// // Set GET requests
-// router.get('/stream', onStream);
+// Set GET requests
+router.get('/bydataid', getById);
 
-// // Set POST requests
-// router.post('/message', onMessage);
+// Set GET requests
+router.get('/byvehiclename', getByVehicleName);
 
 // Export the router 
 module.exports = router;
