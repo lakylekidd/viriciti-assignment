@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 // Construct the vehicle data schema
 const vehicleDataSchema = new mongoose.Schema({
+    vehicle: String,
     time: Number,
     energy: Number,
     gps: [],
