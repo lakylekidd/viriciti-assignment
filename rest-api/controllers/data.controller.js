@@ -5,15 +5,52 @@ const { models } = require('./../mongo-connect');
  * Returns a list of vehicle data by vehicle name
  */
 const getByVehicleName = (req, res) => {
+    // Retrieve any pagination
+    const { limit, skip } = req.query;
     // Retrive the vehicle name
-    const vehicleName = req.params.vehicle;
+    const vehicleName = req.query.vehicle;
+
+    // Generate the find query
+    let query = models.VehicleData.find({ "vehicle": vehicleName });
+    // Check if limit is specified
+    if (limit) { query = query.limit(parseInt(limit)); }
+    // Check if skip is specified
+    if (skip) { query = query.skip(parseInt(skip)); }
+
+    return query
+        .exec()
+        .then(result => {
+            // Return all the results
+            return res.status(200).json({
+                count: result.length,
+                data: result
+            });
+        })
+        .catch(err => {
+            // Log error and return it
+            console.log("Error: ", err);
+            return res.status(500)
+        });
+
+
+
     // Retrieve the list of data for vehicle
-    const data = models.VehicleData.find({ "vehicle": vehicleName });
-    // Return the response
-    if (data) {
-        console.log("Data: ", data);
-        return res.status(200).text(data);
-    }
+    // return models.VehicleData
+    //     .find({ "vehicle": vehicleName })
+
+    //     .exec()
+    //     .then(result => {
+    //         // Return all the results
+    //         return res.status(200).json({
+    //             count: result.length,
+    //             data: result
+    //         });
+    //     })
+    //     .catch(err => {
+    //         // Log error and return it
+    //         console.log("Error: ", err);
+    //         return status.status(500)
+    //     });
 
 }
 /**
