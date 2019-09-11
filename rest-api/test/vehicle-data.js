@@ -280,7 +280,6 @@ chai.use(chaiHttp);
 
 // Begin our Tests
 describe('Vehicle data tests', () => {
-
     // Remove data from the testing database
     beforeEach(done => {
         // Remove the data from the db
@@ -291,10 +290,10 @@ describe('Vehicle data tests', () => {
             done();
         });
     });
-
     // Test the get list endpoint
     describe("/Get vehicle data", () => {
-
+        // Check if the endpoint returns all the entries
+        // should there not be any query parameters
         it("it should return 20 entries", (done) => {
             chai.request(server)
                 .get("/api/data")
@@ -306,6 +305,76 @@ describe('Vehicle data tests', () => {
                     done();
                 });
         });
-
+        // Check that the endpoint returns a list of data
+        // for a specific vehicle name
+        it("it should filter by vehicle name", (done) => {
+            chai.request(server)
+                .get("/api/data?vehicle=vehicle-1")
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.count.should.be.eql(10);
+                    res.body.data.length.should.be.eql(10);
+                    done();
+                });
+        });
+        // Check if the endpoint limits results
+        it("it should limit to 5 results", (done) => {
+            chai.request(server)
+                .get("/api/data?limit=5")
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.count.should.be.eql(5);
+                    done();
+                });
+        });
+        // Check if the endpoint skips results
+        it("it should skip 10 results", (done) => {
+            chai.request(server)
+                .get("/api/data?skip=10")
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.count.should.be.eql(10);
+                    done();
+                });
+        });
+    });
+    // Test the get by id endpoint
+    describe("/Get vehicle data by id", () => {
+        // The vehicle data id
+        const id = "5d78f3fde737812ff152c9c1";
+        const noExistId = "5d78f3ade737812ff152c9c2";
+        const invId = "invalidID83490d";
+        // Check if the endpoint returns 
+        it("it should return 1 entry", (done) => {
+            chai.request(server)
+                .get(`/api/data/${id}`)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    done();
+                });
+        });
+        // Check if the endpoint returns 404 not found
+        it("it should return 404 not found", (done) => {
+            chai.request(server)
+                .get(`/api/data/${noExistId}`)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    res.body.should.be.a('object');
+                    done();
+                });
+        });
+        // Check if the endpoint returns 400 invalid id
+        it("it should return 400 invalid id", (done) => {
+            chai.request(server)
+                .get(`/api/data/${invId}`)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    res.body.should.be.a('object');
+                    res.body.message.should.include('Please provide a valid id.');
+                    res.body.message.should.be.a('string')
+                    done();
+                });
+        });
     })
 })

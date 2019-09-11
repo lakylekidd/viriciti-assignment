@@ -36,7 +36,7 @@ const getById = (req, res) => {
     const id = req.params.id;
 
     // Check if id is provided
-    if (!id) return res.status(400).json({
+    if (!checkObjectIdMatch(id)) return res.status(400).json({
         message: "Please provide a valid id."
     })
 
@@ -63,6 +63,14 @@ const getById = (req, res) => {
             // Log error and return it
             return res.status(500).json({ error: err })
         });
+}
+/**
+ * Check if the id matches ObjectID
+ * @param {*} id The object id
+ */
+const checkObjectIdMatch = (id) => {
+    if (id.match(/^[0-9a-fA-F]{24}$/)) return true;
+    return false;
 }
 
 // Export the functions
