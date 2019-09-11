@@ -288,6 +288,6 @@ describe('Vehicle data tests', () => {
         VehicleData.collection.insert(seed).then(r => { done(); }).catch(console.error);
     });
 
-    // Test the 
+    // Test the get list endpoint
 
 })
