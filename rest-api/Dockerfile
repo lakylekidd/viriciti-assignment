@@ -18,7 +18,7 @@ RUN npm install
 # Expose the port the API is running on
 # to the outside world in order to
 # receive requests
-EXPOSE 3000
+EXPOSE 4000
 
 # This is the command the 
 # container executes by default
