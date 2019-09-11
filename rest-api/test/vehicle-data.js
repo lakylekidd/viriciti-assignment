@@ -1,5 +1,5 @@
 // Set the env variable to test
-process.env.NODE_ENV = "test";
+// process.env.NODE_ENV = "test";
 
 const mongoose = require('mongoose');
 const { models } = require('../mongo-connect');
