@@ -2,17 +2,28 @@
 const mongoose = require('mongoose');
 const vehicleData = require('./schemas/vehicle-data.schema');
 
-// Function that returns a connected mongoose object
-const connectDb = () => {
-    // Return a connected mongoose to specific connection string
-    return mongoose.connect('mongodb+srv://lakylekidd:Hermes%401986@cluster0-aysvk.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true });
-}
-
-// Variable that holds the available models
-const models = { vehicleData };
-
 // Export the module
-module.exports = { models, connectDb };
+module.exports = (logger) => {
+    // Function that returns a connected mongoose object
+    const connectDb = () => {
+        // Get the connection promise and db
+        const connection = mongoose.connect(process.env.MONGO_DB_URI, { useNewUrlParser: true });
+        const db = mongoose.connection;
+        // 
+        db.on('open', () => {
+            // Log connection
+            logger.info(`MongoDB Connected!`);
+        });
+
+        // Return a connected mongoose to specific connection string
+        return connection;
+    }
+
+    // Variable that holds the available models
+    const models = { vehicleData };
+
+    return { connectDb, models }
+};
 
 
 // mongoose.connect('', { useNewUrlParser: true });
