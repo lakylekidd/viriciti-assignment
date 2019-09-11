@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "test": "mocha -r ts-node/register src/**/*.spec.ts",
-    "coverage": "nyc -r lcov -e .ts -x \"*.spec.ts\" npm run test"
+    "coverage": "nyc -r lcov -e .ts -x \"src/**/*.spec.ts\" npm run test"
   },
   "keywords": [],
   "author": "",
