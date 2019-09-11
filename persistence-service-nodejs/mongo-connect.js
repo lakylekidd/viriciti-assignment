@@ -9,10 +9,15 @@ module.exports = (logger) => {
         // Get the connection promise and db
         const connection = mongoose.connect(process.env.MONGO_DB_URI, { useNewUrlParser: true });
         const db = mongoose.connection;
-        // 
+        // Add event on connection open
         db.on('open', () => {
             // Log connection
             logger.info(`MongoDB Connected!`);
+        });
+        // Add event on connection error
+        db.on('error', (err) => {
+            // Log error
+            logger.error(`MongoDB Connection Error: ${err}`)
         });
 
         // Return a connected mongoose to specific connection string
