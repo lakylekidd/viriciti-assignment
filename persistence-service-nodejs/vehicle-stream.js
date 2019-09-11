@@ -1,4 +1,5 @@
 // Import required modules
+const mongoose = require('mongoose');
 const NATS = require('nats');
 const vehicleName = 'vehicle.test-bus-1';
 
@@ -32,6 +33,7 @@ module.exports = (logger) => {
 			// Create a vehicle data object
 			// That will be saved in the db
 			const vehicleData = vehicleDataModel({
+				_id: new mongoose.Types.ObjectId(),
 				vehicle: vehicleName,
 				time: data.time,
 				energy: data.energy,
