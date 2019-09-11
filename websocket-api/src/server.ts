@@ -15,6 +15,14 @@ const wss = new WebSocket.Server({ server });
 // Add on connect event to web socket server
 wss.on('connection', (ws: WebSocket) => {
 
+    // Add on message event (for testing purposes)
+    ws.on('message', (message: string) => {
+        // Log the received message 
+        console.log("Received message: ", message);
+        // Send the message back to the client
+        ws.send(`You sent: ${message}`);
+    });
+
     // WS Server is connected -- Send feedback
     ws.send(`You have connected to the WebSocket Server!`);
 });
