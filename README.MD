@@ -1,0 +1,2 @@
+## ViriCiti Job Application Assignment
+This is the NodeJS project assigned to me by ViriCiti. It basically simulates the reception of raw vehicle data for which I am to demonstrate how to intercept and store in a MongoDB database and then send it to the browser via WebSocket.
