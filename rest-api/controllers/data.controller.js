@@ -4,14 +4,11 @@ const { models } = require('./../mongo-connect');
 /**
  * Returns a list of vehicle data by vehicle name
  */
-const getByVehicleName = (req, res) => {
+const getData = (req, res) => {
     // Retrieve any pagination
-    const { limit, skip } = req.query;
-    // Retrive the vehicle name
-    const vehicleName = req.query.vehicle;
-
+    const { limit, skip, ...rest } = req.query;
     // Generate the find query
-    let query = models.VehicleData.find({ "vehicle": vehicleName });
+    let query = models.VehicleData.find(rest);
     // Check if limit is specified
     if (limit) { query = query.limit(parseInt(limit)); }
     // Check if skip is specified
@@ -36,7 +33,12 @@ const getByVehicleName = (req, res) => {
  */
 const getById = (req, res) => {
     // Retrive the entry id
-    const id = req.query.id;
+    const id = req.params.id;
+
+    // Check if id is provided
+    if (!id) return res.status(400).json({
+        message: "Please provide a valid id."
+    })
 
     // Generate the find query
     let query = models.VehicleData.findById(id);
@@ -48,7 +50,7 @@ const getById = (req, res) => {
             // Check if object was found
             if (result) {
                 // Return the resulted object
-                return res.status(200).json(JSON.stringify(result));
+                return res.status(200).json(result);
             } else {
                 // Return 404 not found
                 return res.status(404).json({
@@ -64,4 +66,4 @@ const getById = (req, res) => {
 }
 
 // Export the functions
-module.exports = { getById, getByVehicleName }
+module.exports = { getById, getData }
