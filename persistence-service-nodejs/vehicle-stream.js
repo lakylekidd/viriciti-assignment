@@ -44,7 +44,8 @@ module.exports = (logger) => {
 			});
 			// Save to the database
 			vehicleData.save().then(result => {
-
+				// Log the result
+				logger.info(`Vehicle saved with id: ${vehicleData._id}`)
 			}).catch(err => {
 				// Log the error
 				logger.error(`Error: ${err}`);
