@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "outDir": "./dist/server",
+        "strict": true,
+        "sourceMap": true,
+        "typeRoots": [
+            "node_module/@types"
+        ],
+        "types": [
+            "mocha",
+            "chai",
+            "node"
+        ]
+    },
+    "exclude": [
+        "dist",
+        "node_modules"
+    ]
+}
