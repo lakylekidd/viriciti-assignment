@@ -8,11 +8,7 @@ const cors = require('cors');
 const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 
 // The server configuration
-const config = {
-    name: 'dockerized-express-api',
-    port: process.env.PORT || 4000,
-    host: '0.0.0.0'
-};
+const config = require('config');
 
 // Setup app and logging
 const app = express();
