@@ -40,5 +40,8 @@ connectDb().then(async () => {
         }
         // Log server is running
         logger.info(`${config.name} running on ${config.host}:${config.port}`);
-    })
-})
+    });
+});
+
+// Export the server app
+module.exports = app;

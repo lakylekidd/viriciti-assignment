@@ -2,7 +2,8 @@
 process.env.NODE_ENV = "test";
 
 const mongoose = require('mongoose');
-const VehicleData = require('../schemas/vehicle-data.schema');
+const { models } = require('../mongo-connect');
+const { VehicleData } = models;
 
 // Load the test dependencies
 const chai = require('chai');
@@ -23,7 +24,7 @@ const seed = [
         "soc": 72.8,
         "speed": 0,
         "time": 1511436338000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-1"
     },
     {
         "__v": 0,
@@ -36,7 +37,7 @@ const seed = [
         "soc": 72.8,
         "speed": 4,
         "time": 1511436339000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-1"
     },
     {
         "__v": 0,
@@ -49,7 +50,7 @@ const seed = [
         "soc": 72.8,
         "speed": 6,
         "time": 1511436340000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-1"
     },
     {
         "__v": 0,
@@ -62,7 +63,7 @@ const seed = [
         "soc": 72.8,
         "speed": 8,
         "time": 1511436341000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-1"
     },
     {
         "__v": 0,
@@ -75,7 +76,7 @@ const seed = [
         "soc": 72.8,
         "speed": 10,
         "time": 1511436342000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-1"
     },
     {
         "__v": 0,
@@ -88,7 +89,7 @@ const seed = [
         "soc": 72.8,
         "speed": 12,
         "time": 1511436343000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-1"
     },
     {
         "__v": 0,
@@ -101,7 +102,7 @@ const seed = [
         "soc": 72.8,
         "speed": 12,
         "time": 1511436345000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-1"
     },
     {
         "__v": 0,
@@ -114,7 +115,7 @@ const seed = [
         "soc": 72.8,
         "speed": 13,
         "time": 1511436344000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-1"
     },
     {
         "__v": 0,
@@ -127,7 +128,7 @@ const seed = [
         "soc": 72.8,
         "speed": 11,
         "time": 1511436346000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-1"
     },
     {
         "__v": 0,
@@ -140,7 +141,7 @@ const seed = [
         "soc": 72.8,
         "speed": 9,
         "time": 1511436347000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-1"
     },
     {
         "__v": 0,
@@ -153,7 +154,7 @@ const seed = [
         "soc": 72.8,
         "speed": 9,
         "time": 1511436348000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-2"
     },
     {
         "__v": 0,
@@ -166,7 +167,7 @@ const seed = [
         "soc": 72.8,
         "speed": 6,
         "time": 1511436350000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-2"
     },
     {
         "__v": 0,
@@ -179,7 +180,7 @@ const seed = [
         "soc": 72.8,
         "speed": 7,
         "time": 1511436349000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-2"
     },
     {
         "__v": 0,
@@ -192,7 +193,7 @@ const seed = [
         "soc": 72.8,
         "speed": 6,
         "time": 1511436351000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-2"
     },
     {
         "__v": 0,
@@ -205,7 +206,7 @@ const seed = [
         "soc": 72.8,
         "speed": 3,
         "time": 1511436352000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-2"
     },
     {
         "__v": 0,
@@ -218,7 +219,7 @@ const seed = [
         "soc": 72.8,
         "speed": 3,
         "time": 1511436353000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-2"
     },
     {
         "__v": 0,
@@ -231,7 +232,7 @@ const seed = [
         "soc": 72.8,
         "speed": 3,
         "time": 1511436354000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-2"
     },
     {
         "__v": 0,
@@ -244,7 +245,7 @@ const seed = [
         "soc": 72.8,
         "speed": 2,
         "time": 1511436355000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-2"
     },
     {
         "__v": 0,
@@ -257,7 +258,7 @@ const seed = [
         "soc": 72.8,
         "speed": 0,
         "time": 1511436356000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-2"
     },
     {
         "__v": 0,
@@ -270,7 +271,7 @@ const seed = [
         "soc": 72.8,
         "speed": 1,
         "time": 1511436376000,
-        "vehicle": "vehicle.test-bus-1"
+        "vehicle": "vehicle-2"
     }
 ]
 
@@ -283,11 +284,28 @@ describe('Vehicle data tests', () => {
     // Remove data from the testing database
     beforeEach(done => {
         // Remove the data from the db
-        VehicleData.remove({}).then(r => { }).catch(console.error);
+        //VehicleData.remove({}).exec().then(r => { }).catch(console.error);
+        VehicleData.remove({}, (err) => { });
         // Seed the db with data
-        VehicleData.collection.insert(seed).then(r => { done(); }).catch(console.error);
+        VehicleData.insertMany(seed, (err, docs) => {
+            done();
+        });
     });
 
     // Test the get list endpoint
+    describe("/Get vehicle data", () => {
 
+        it("it should return 20 entries", (done) => {
+            chai.request(server)
+                .get("/api/data")
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.count.should.be.eql(20);
+                    res.body.data.length.should.be.eql(20);
+                    done();
+                });
+        });
+
+    })
 })
