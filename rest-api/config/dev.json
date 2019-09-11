@@ -1,0 +1,6 @@
+{
+    "MONGO_DB_URI": "mongodb+srv://lakylekidd:Hermes%401986@cluster0-aysvk.mongodb.net/test?retryWrites=true&w=majority",
+    "name": "dockerized-express-api",
+    "port": 4000,
+    "host": "localhost"
+}

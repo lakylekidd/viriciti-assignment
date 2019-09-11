@@ -1,6 +1,5 @@
 // Use local env secret variables
 require('dotenv').config();
-const { models, connectDb } = require('./mongo-connect');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -20,6 +19,8 @@ const logger = log({
     file: false,
     label: config.name
 });
+// Import the mongo connnection and model
+const { models, connectDb } = require('./mongo-connect')(logger);
 
 // Import the Vehicle Stream module
 const vehicleStream = require('./vehicle-stream')(logger);
