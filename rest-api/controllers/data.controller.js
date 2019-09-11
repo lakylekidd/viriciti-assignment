@@ -28,30 +28,8 @@ const getByVehicleName = (req, res) => {
         })
         .catch(err => {
             // Log error and return it
-            console.log("Error: ", err);
-            return res.status(500)
+            return res.status(500).json({ error: err })
         });
-
-
-
-    // Retrieve the list of data for vehicle
-    // return models.VehicleData
-    //     .find({ "vehicle": vehicleName })
-
-    //     .exec()
-    //     .then(result => {
-    //         // Return all the results
-    //         return res.status(200).json({
-    //             count: result.length,
-    //             data: result
-    //         });
-    //     })
-    //     .catch(err => {
-    //         // Log error and return it
-    //         console.log("Error: ", err);
-    //         return status.status(500)
-    //     });
-
 }
 /**
  * Returns a single entry of vehicle data by ID
