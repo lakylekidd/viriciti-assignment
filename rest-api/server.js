@@ -1,5 +1,6 @@
 // Use local env secret variables
 require('dotenv').config();
+const { models, connectDb } = require('./mongo-connect');
 const express = require('express');
 const bodyParser = require('body-parser');
 const dataRoutes = require('./routes/data.route');
@@ -34,11 +35,14 @@ app.get('/', (req, res) => {
 // Setup directed routes
 app.use('/api/data', dataRoutes);
 
-// Set up port
-app.listen(config.port, config.host, (e) => {
-    if (e) {
-        throw new Error('Internal Server Error');
-    }
-    // Log server is running
-    logger.info(`${config.name} running on ${config.host}:${config.port}`);
+// Connect to MongoDB
+connectDb().then(async () => {
+    // Set up port
+    app.listen(config.port, config.host, (e) => {
+        if (e) {
+            throw new Error('Internal Server Error');
+        }
+        // Log server is running
+        logger.info(`${config.name} running on ${config.host}:${config.port}`);
+    })
 })
