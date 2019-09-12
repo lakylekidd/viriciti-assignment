@@ -6,7 +6,7 @@ services:
     networks: 
       - backend
     ports:
-      - "3000:3000"
+      - "4000:4000"
     volumes:
       - ./:/usr/src/app 
       # Add volume mapping to dynamically change contents of running 
